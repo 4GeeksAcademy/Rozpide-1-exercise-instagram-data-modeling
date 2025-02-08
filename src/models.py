@@ -24,11 +24,12 @@ class Address(Base):
 class NombreUsuario(Base):
     __tablename__ = 'nombre_usuario'
     id = Column(Integer, primary_key=True)
+    username = Column(String(250), nullable=False) # columna username de tipo string de 250 caracteres y no puede ser nulo que representa el nombre de usuario(Nickname)
     address = relationship('Address') # relación con la tabla address
     address_id = Column (Integer, ForeignKey('address.id')) # columna address_id de tipo entero que representa el id de la dirección y es una clave foránea que se relaciona con la columna id de la tabla address
     person_id = Column(Integer, ForeignKey('person.id'), nullable=False) # columna person_id de tipo entero y no puede ser nulo que representa el id de la persona y es una clave foránea que se relaciona con la columna id de la tabla person
     person = relationship('Person', back_populates='nombre_usuario') # relación con la tabla person 
-    posts = relationship('Post', back_populates='usuario') # relación con la tabla post 
+    posts = relationship('Post', back_populates='usuario') # relación con la tabla post uno a muchos
     
 Person.nombre_usuario = relationship('NombreUsuario', uselist=False, back_populates='person') # define inversamente la relación entre la tabla person y la tabla nombre_usuario
 # clase post que representa la tabla post con sus distintas relaciones    
